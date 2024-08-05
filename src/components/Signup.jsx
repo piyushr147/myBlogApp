@@ -5,6 +5,7 @@ import {login} from '../store/authSlice'
 import {Button, Input, Logo} from './index.js'
 import {useDispatch} from 'react-redux'
 import {useForm} from 'react-hook-form'
+import { useEffect } from 'react'
 
 function Signup() {
     console.log("signup called")
@@ -13,6 +14,15 @@ function Signup() {
     const [error, setError] = useState("")
     const dispatch = useDispatch()
     const {register, handleSubmit,formState: { errors }} = useForm()
+
+    useEffect(() => {
+        if (error) {
+          const timer = setTimeout(() => {
+            setError('');
+          }, 2000);
+          return () => clearTimeout(timer);
+        }
+      }, [error]);
 
     const create = async(data) => {
         console.log("react-hook-form data",data)
@@ -24,6 +34,9 @@ function Signup() {
                 const userData = await authenticationService.getCurrentUser()
                 if(userData) dispatch(login(userData));
                 navigate("/")
+            }
+            else{
+                setError("User already exists")
             }
         } catch (error) {
             setError(error.message)
@@ -85,6 +98,7 @@ function Signup() {
                         })}
                         />
                         {errors.password && <p className='text-red-600 mt-8 text-center'>{errors.password.message}</p>}
+                        {}
                         <Button type="submit" className="w-full">
                             Create Account
                         </Button>

@@ -51,13 +51,13 @@ function Header() {
             {navItems.map((item) => (
               item.active ? (
                 <li key={item.name}                 
-                    className='inline-bock px-6 py-3 duration-200 hover:bg-green-300 rounded-full text-white'
+                    className='inline-block px-6 py-3 duration-200 hover:bg-green-300 rounded-full text-white'
                 >
                   <button onClick={() => navigate(item.path)}>{item.name}</button>
                 </li>) : null
             ))}
             {userStatus && (
-              <li>
+              <li className='inline-bock px-6 py-3 duration-200 hover:bg-green-300 rounded-full text-white'>
                 <LogoutBtn />
               </li>
             )}
